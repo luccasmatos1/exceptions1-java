@@ -36,17 +36,12 @@ public class Program {
             System.out.print("NOVO CHECK OUT (DD/MM/YYYY): ");
             checkOut = Reservation.sdf.parse(sc.next());
 
-            Date now = new Date();
-            if (checkIn.before(now) || checkOut.before(now)){
-                System.out.println("NAO PODE RESERVAR COM DIA ANTERIOR");
-            } else if (!checkOut.after(checkIn)) {
-                System.out.println("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
-            }else {
-                reservation.updateDates(checkIn,checkOut);
+            String error = reservation.updateDates(checkIn,checkOut);
+            if (error == null){
                 System.out.println(reservation);
-
+            } else {
+                System.out.println(error);
             }
-
 
 
         }

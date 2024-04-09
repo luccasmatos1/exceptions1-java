@@ -45,9 +45,18 @@ public class Reservation {
     }
 
 
-    public void updateDates(Date checkIn, Date checkOut){
-        this.checkIn=checkIn;
-        this.checkOut=checkOut;
+    public String updateDates(Date checkIn, Date checkOut){
+        Date now = new Date();
+        if (checkIn.before(now) || checkOut.before(now)){
+            return "NAO PODE RESERVAR COM DIA ANTERIOR";
+        } else if (!checkOut.after(checkIn)) {
+            return  "CHECKOUT NAO PODE SER ANTES DO CHECKIN";
+        }else {
+            this.checkIn=checkIn;
+            this.checkOut=checkOut;
+        }
+         return null;
+
     }
 
 
