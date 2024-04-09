@@ -17,7 +17,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) throws DomainException {
+    public Reservation(Integer roomNumber, Date checkIn, Date checkOut){
         if (!checkOut.after(checkIn)){
             throw new DomainException("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
         }
@@ -43,14 +43,13 @@ public class Reservation {
     }
 
 
-
     public long duration(){
         long diff = checkOut.getTime() - checkIn.getTime(); // calcular a diferença em millisegundos
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); // converter millisegundos para dias, usando o tipo enumerado timeunit
     }
 
 
-    public void updateDates(Date checkIn, Date checkOut) throws DomainException {
+    public void updateDates(Date checkIn, Date checkOut) {
         Date now = new Date();
         if (checkIn.before(now) || checkOut.before(now)){
             throw new DomainException("NAO PODE RESERVAR COM DIA ANTERIOR"); // instanciei uma exceção usando o throw new e utilizei o IllegalArgumentException q é uma exceção quando é passado valor invalido para o metodo

@@ -41,6 +41,8 @@ public class Program {
             System.out.println("DATA INVALIDA!");
         }catch (DomainException e){
             System.out.println("ERROR: " + e.getMessage());
+        }catch (RuntimeException e){
+            System.out.println("ERRO INESPERADO");
         }
 
 
