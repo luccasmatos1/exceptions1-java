@@ -45,17 +45,16 @@ public class Reservation {
     }
 
 
-    public String updateDates(Date checkIn, Date checkOut){
+    public void updateDates(Date checkIn, Date checkOut){
         Date now = new Date();
         if (checkIn.before(now) || checkOut.before(now)){
-            return "NAO PODE RESERVAR COM DIA ANTERIOR";
+            throw new IllegalArgumentException ("NAO PODE RESERVAR COM DIA ANTERIOR"); // instanciei uma exceção usando o throw new e utilizei o IllegalArgumentException q é uma exceção quando é passado valor invalido para o metodo
         } else if (!checkOut.after(checkIn)) {
-            return  "CHECKOUT NAO PODE SER ANTES DO CHECKIN";
+            throw  new IllegalArgumentException("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
         }else {
             this.checkIn=checkIn;
             this.checkOut=checkOut;
         }
-         return null;
 
     }
 
