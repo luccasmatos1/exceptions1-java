@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.exception.DomainException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +17,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) {
+    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) throws DomainException {
+        if (!checkOut.after(checkIn)){
+            throw new DomainException("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
+        }
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -45,16 +50,17 @@ public class Reservation {
     }
 
 
-    public void updateDates(Date checkIn, Date checkOut){
+    public void updateDates(Date checkIn, Date checkOut) throws DomainException {
         Date now = new Date();
         if (checkIn.before(now) || checkOut.before(now)){
-            throw new IllegalArgumentException ("NAO PODE RESERVAR COM DIA ANTERIOR"); // instanciei uma exceção usando o throw new e utilizei o IllegalArgumentException q é uma exceção quando é passado valor invalido para o metodo
+            throw new DomainException("NAO PODE RESERVAR COM DIA ANTERIOR"); // instanciei uma exceção usando o throw new e utilizei o IllegalArgumentException q é uma exceção quando é passado valor invalido para o metodo
         } else if (!checkOut.after(checkIn)) {
             throw  new IllegalArgumentException("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
-        }else {
-            this.checkIn=checkIn;
-            this.checkOut=checkOut;
         }
+
+        this.checkIn=checkIn;
+        this.checkOut=checkOut;
+
 
     }
 

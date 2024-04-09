@@ -1,4 +1,5 @@
 import model.entities.Reservation;
+import model.exception.DomainException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,28 +25,21 @@ public class Program {
             System.out.print("CHECK OUT (DD/MM/YYYY): ");
             Date checkOut = Reservation.sdf.parse(sc.next());
 
-            if (!checkOut.after(checkIn)){
-                System.out.println("CHECKOUT NAO PODE SER ANTES DO CHECKIN");
-            }
+            Reservation reservation = new Reservation(room,checkIn,checkOut);
+            System.out.println(reservation);
 
-            else {
-                Reservation reservation = new Reservation(room,checkIn,checkOut);
-                System.out.println(reservation);
+            System.out.println("ATUALIZAR RESERVA: ");
+            System.out.print("NOVO CHECK IN (DD/MM/YYYY): ");
+            checkIn = Reservation.sdf.parse(sc.next());
+            System.out.print("NOVO CHECK OUT (DD/MM/YYYY): ");
+            checkOut = Reservation.sdf.parse(sc.next());
 
-                System.out.println("ATUALIZAR RESERVA: ");
-                System.out.print("NOVO CHECK IN (DD/MM/YYYY): ");
-                checkIn = Reservation.sdf.parse(sc.next());
-                System.out.print("NOVO CHECK OUT (DD/MM/YYYY): ");
-                checkOut = Reservation.sdf.parse(sc.next());
-
-                reservation.updateDates(checkIn,checkOut);
-                System.out.println(reservation);
-
-            }
+            reservation.updateDates(checkIn,checkOut);
+            System.out.println(reservation);
 
         }catch (ParseException e){
             System.out.println("DATA INVALIDA!");
-        }catch (IllegalArgumentException e){
+        }catch (DomainException e){
             System.out.println("ERROR: " + e.getMessage());
         }
 
